@@ -1,0 +1,402 @@
+mnnexplain: 200 inputs and outputs, from real runs (io/ios.pl has the same as Prolog facts).
+
+1. simplify(1*z+(x+z)+(y+1+z*0))
+   => z+(x+z)+(y+1)
+2. explain(1*(1*z))
+   => "1*(1*z) becomes 1*z, because one times a number is the number. 1*z becomes z, because one times a number is the number."
+3. trace_length(y*(1-0)*(3+(z+x)))
+   => 0
+4. simplify(0*y+z*y-(3+0-(2+3)))
+   => z*y-(3-(2+3))
+5. explain(0+y-0)
+   => "0+y-0 becomes y-0, because adding to zero gives the other number."
+6. trace_length(3*y)
+   => 0
+7. simplify(3+(2+z)+(3*2-3))
+   => 3+(2+z)+(3*2-3)
+8. explain(3-(x-1))
+   => "Nothing to simplify."
+9. trace_length(2*(0*2-1*1))
+   => 2
+10. simplify(x*1+2+3)
+   => x+2+3
+11. explain(z*3+2)
+   => "Nothing to simplify."
+12. trace_length(3)
+   => 0
+13. simplify((2*0-(3+0))*y)
+   => (0-3)*y
+14. explain(z)
+   => "Nothing to simplify."
+15. trace_length(z-x+x+(y*x-3))
+   => 0
+16. simplify(1)
+   => 1
+17. explain((x-1)*1)
+   => "(x-1)*1 becomes x-1, because multiplying by one changes nothing."
+18. trace_length(0)
+   => 0
+19. simplify(x*x+(x+0)-0*(0*z))
+   => x*x+x-0
+20. explain(2+y-3*2)
+   => "Nothing to simplify."
+21. trace_length((2+2*3)*x)
+   => 0
+22. simplify(1-(3*0+y*z))
+   => 1-y*z
+23. explain(3*z-(2+3))
+   => "Nothing to simplify."
+24. trace_length(y)
+   => 0
+25. simplify(0-2+(3+x)+x)
+   => 0-2+(3+x)+x
+26. explain(0*3*(3+2))
+   => "0*3*(3+2) becomes 0*(3+2), because zero times anything is zero. 0*(3+2) becomes 0, because zero times anything is zero."
+27. trace_length((z+3)*(0-0)*3)
+   => 0
+28. simplify(z-(1+x+(z+2)))
+   => z-(1+x+(z+2))
+29. explain(3+2-(x+z))
+   => "Nothing to simplify."
+30. trace_length(x)
+   => 0
+31. simplify((2-y-x)*(x+1-(z+y)))
+   => (2-y-x)*(x+1-(z+y))
+32. explain(x+z+1)
+   => "Nothing to simplify."
+33. trace_length(3*x-1*(1-2))
+   => 1
+34. simplify(z-(1-z)+y)
+   => z-(1-z)+y
+35. explain(3+1+y*1)
+   => "3+1+y*1 becomes 3+1+y, because multiplying by one changes nothing."
+36. trace_length((3-y)*(2*2-2))
+   => 0
+37. simplify(x)
+   => x
+38. explain(1+2)
+   => "Nothing to simplify."
+39. trace_length(0+0-1*2-x*x*(3-1))
+   => 2
+40. simplify(0+y+(1+0)+(x*0-(0-y)))
+   => y+1+(0-(0-y))
+41. explain(z-y-3*x)
+   => "Nothing to simplify."
+42. trace_length(1)
+   => 0
+43. simplify(z)
+   => z
+44. explain(2+2+0)
+   => "2+2+0 becomes 2+2, because adding zero changes nothing."
+45. trace_length(2)
+   => 0
+46. simplify(x-y-x*3+1*y)
+   => x-y-x*3+y
+47. explain(2)
+   => "Nothing to simplify."
+48. trace_length(2*(1-2)*(x+z-(x-x)))
+   => 0
+49. simplify((z-(x-z))*(2+2-1))
+   => (z-(x-z))*(2+2-1)
+50. explain(z*1*(3+1))
+   => "z*1*(3+1) becomes z*(3+1), because multiplying by one changes nothing."
+51. trace_length(3-z+3*2-y)
+   => 0
+52. simplify(y+1)
+   => y+1
+53. explain(2-2+(2-x))
+   => "Nothing to simplify."
+54. trace_length(2*(1*2+z*z))
+   => 1
+55. simplify(z)
+   => z
+56. explain((3-0)*(x-x))
+   => "Nothing to simplify."
+57. trace_length(2)
+   => 0
+58. simplify(1)
+   => 1
+59. explain(1+3-(2+x))
+   => "Nothing to simplify."
+60. trace_length(1-(y+x+(3-2)))
+   => 0
+61. simplify(2-0-(3-x)-0)
+   => 2-0-(3-x)-0
+62. explain(2)
+   => "Nothing to simplify."
+63. trace_length((2*3-(3+0))*(z+x-z))
+   => 1
+64. simplify(0+0-z*0+(y*x-1*z))
+   => 0-0+(y*x-z)
+65. explain(0*1+(3+1))
+   => "0*1+(3+1) becomes 0+(3+1), because multiplying by one changes nothing. 0+(3+1) becomes 3+1, because adding to zero gives the other number."
+66. trace_length(1-y*z-3*z*(x-z))
+   => 0
+67. simplify(3-z+y*(x*2))
+   => 3-z+y*(x*2)
+68. explain(3-y-y)
+   => "Nothing to simplify."
+69. trace_length(1*(1-1)+0)
+   => 2
+70. simplify(2)
+   => 2
+71. explain(z+x+(z-z))
+   => "Nothing to simplify."
+72. trace_length(0+(y-z)-(3+2)*(2-0))
+   => 1
+73. simplify(3*y-(x+0)-(1-x)*(2-0))
+   => 3*y-x-(1-x)*(2-0)
+74. explain(z-(y+2))
+   => "Nothing to simplify."
+75. trace_length(z*3+(3+x)-(x*1+(x+1)))
+   => 1
+76. simplify(0)
+   => 0
+77. explain(3*0+(z-0))
+   => "3*0+(z-0) becomes 0+(z-0), because anything times zero is zero. 0+(z-0) becomes z-0, because adding to zero gives the other number."
+78. trace_length(3*2*(2-y)*(3-1+(0+y)))
+   => 1
+79. simplify(0+3-(2+2)-(2+1)*y)
+   => 3-(2+2)-(2+1)*y
+80. explain(x-2*2)
+   => "Nothing to simplify."
+81. trace_length(y)
+   => 0
+82. simplify(z*(1*(3*z)))
+   => z*(3*z)
+83. explain(y-2+z*2)
+   => "Nothing to simplify."
+84. trace_length((z+1)*(y+y)+(3+z-x*y))
+   => 0
+85. simplify((0-y)*(x+0)*(x*y-(1+2)))
+   => (0-y)*x*(x*y-(1+2))
+86. explain(y-2+0*1)
+   => "y-2+0*1 becomes y-2+0, because multiplying by one changes nothing. y-2+0 becomes y-2, because adding zero changes nothing."
+87. trace_length(1*0)
+   => 1
+88. simplify((z*x+2*y)*3)
+   => (z*x+2*y)*3
+89. explain(y+3*z)
+   => "Nothing to simplify."
+90. trace_length(y)
+   => 0
+91. simplify(0*3*x-3*x*(2*0))
+   => 0-0
+92. explain(z+z+y)
+   => "Nothing to simplify."
+93. trace_length(y*(2*2+1*1))
+   => 1
+94. simplify(x-(3-3)+(y+z+(3+0)))
+   => x-(3-3)+(y+z+3)
+95. explain(x-3*z)
+   => "Nothing to simplify."
+96. trace_length(x)
+   => 0
+97. simplify(3*(0*y*0))
+   => 0
+98. explain(y-(0-0))
+   => "Nothing to simplify."
+99. trace_length(3-3)
+   => 0
+100. simplify(x-z*3-(2*2+1*3))
+   => x-z*3-(2*2+3)
+101. explain(0)
+   => "Nothing to simplify."
+102. trace_length(x-y-(z-3)-(y+z)*(3*2))
+   => 0
+103. simplify(0)
+   => 0
+104. explain(x)
+   => "Nothing to simplify."
+105. trace_length((1-x)*(1-1)*(3-3))
+   => 0
+106. simplify(1-3)
+   => 1-3
+107. explain(x)
+   => "Nothing to simplify."
+108. trace_length(x*x+(1+0)+y)
+   => 1
+109. simplify(z)
+   => z
+110. explain((y-z)*3)
+   => "Nothing to simplify."
+111. trace_length(z*0*(1*2)-1)
+   => 2
+112. simplify(1*z+(y+y+3*0))
+   => z+(y+y)
+113. explain(z+y+3)
+   => "Nothing to simplify."
+114. trace_length(y+(3*z-2*1))
+   => 1
+115. simplify((0*3-2*1)*(1-(z-x)))
+   => (0-2)*(1-(z-x))
+116. explain(1-0+(0-1))
+   => "Nothing to simplify."
+117. trace_length(2+z-3*z+(x*0-(y-x)))
+   => 1
+118. simplify(3*(1*y)*2)
+   => 3*y*2
+119. explain(3+1+(z+3))
+   => "Nothing to simplify."
+120. trace_length(2*3+(3-2)-(2*y+3))
+   => 0
+121. simplify(3*x+z+(3+y+(x-z)))
+   => 3*x+z+(3+y+(x-z))
+122. explain((0-x)*3)
+   => "Nothing to simplify."
+123. trace_length(0)
+   => 0
+124. simplify((3+x-x*2)*1)
+   => 3+x-x*2
+125. explain(2)
+   => "Nothing to simplify."
+126. trace_length(z-(0-z-3))
+   => 0
+127. simplify((x-2+y*2)*(0-2*z))
+   => (x-2+y*2)*(0-2*z)
+128. explain(x*z*(x+3))
+   => "Nothing to simplify."
+129. trace_length(1*x-(3-0)-3)
+   => 1
+130. simplify(x-y-(0+3)+(0+x)*(z-1))
+   => x-y-3+x*(z-1)
+131. explain(0+(2-0))
+   => "0+(2-0) becomes 2-0, because adding to zero gives the other number."
+132. trace_length(0*2*(2-x)-2)
+   => 2
+133. simplify((z-2)*(3*1))
+   => (z-2)*3
+134. explain(0+y-(z+x))
+   => "0+y-(z+x) becomes y-(z+x), because adding to zero gives the other number."
+135. trace_length((0+1)*(2*0)-0)
+   => 3
+136. simplify(0+(2-3)+(y+0-(y-0)))
+   => 2-3+(y-(y-0))
+137. explain(3-x+0*y)
+   => "3-x+0*y becomes 3-x+0, because zero times anything is zero. 3-x+0 becomes 3-x, because adding zero changes nothing."
+138. trace_length((z-x)*(3*2)-(1-2+0*0))
+   => 2
+139. simplify((2-z+y)*(2*2-(3-x)))
+   => (2-z+y)*(2*2-(3-x))
+140. explain(3)
+   => "Nothing to simplify."
+141. trace_length(1)
+   => 0
+142. simplify((x-x)*1+(1-y))
+   => x-x+(1-y)
+143. explain(x*1+(3-3))
+   => "x*1+(3-3) becomes x+(3-3), because multiplying by one changes nothing."
+144. trace_length(1+(1-x-(2-0)))
+   => 0
+145. simplify(0)
+   => 0
+146. explain(0+z)
+   => "0+z becomes z, because adding to zero gives the other number."
+147. trace_length(1*1*(z-y)-x*(0-2))
+   => 2
+148. simplify(x*2*(y*x)-x*1*(3-y))
+   => x*2*(y*x)-x*(3-y)
+149. explain(z)
+   => "Nothing to simplify."
+150. trace_length(z)
+   => 0
+151. simplify((z-3)*(3*2)-z)
+   => (z-3)*(3*2)-z
+152. explain(1*z*(0+3))
+   => "1*z*(0+3) becomes z*(0+3), because one times a number is the number. z*(0+3) becomes z*3, because adding to zero gives the other number."
+153. trace_length(1+z*1-2*0*(z*3))
+   => 3
+154. simplify(3+y)
+   => 3+y
+155. explain(y-3-(z+1))
+   => "Nothing to simplify."
+156. trace_length(3)
+   => 0
+157. simplify((x*x+(z-1))*((x+x)*(2+x)))
+   => (x*x+(z-1))*((x+x)*(2+x))
+158. explain(y)
+   => "Nothing to simplify."
+159. trace_length((1+1)*(1+0+2*0))
+   => 4
+160. simplify(2*(x+y)*((3+y)*1))
+   => 2*(x+y)*(3+y)
+161. explain(z*2*(2-2))
+   => "Nothing to simplify."
+162. trace_length((z*3-(z+y))*(0*2+1*x))
+   => 3
+163. simplify(x+z*2*y)
+   => x+z*2*y
+164. explain(0-y-0*0)
+   => "0-y-0*0 becomes 0-y-0, because anything times zero is zero."
+165. trace_length(0)
+   => 0
+166. simplify(3)
+   => 3
+167. explain(1*0+(x-y))
+   => "1*0+(x-y) becomes 0+(x-y), because one times a number is the number. 0+(x-y) becomes x-y, because adding to zero gives the other number."
+168. trace_length(x)
+   => 0
+169. simplify(y)
+   => y
+170. explain(z)
+   => "Nothing to simplify."
+171. trace_length(x*0+z*2-y*0*(z-2))
+   => 4
+172. simplify(0*2*(x-0)*(x*0-1*x))
+   => 0
+173. explain(x+3-0)
+   => "Nothing to simplify."
+174. trace_length(2+(1+3+(3-3)))
+   => 0
+175. simplify((x-1)*z)
+   => (x-1)*z
+176. explain(3-2-0*2)
+   => "3-2-0*2 becomes 3-2-0, because zero times anything is zero."
+177. trace_length(x*(3*2)-(1+2-(2+z)))
+   => 0
+178. simplify(y-z-(z-2)*(y+3))
+   => y-z-(z-2)*(y+3)
+179. explain(y+2)
+   => "Nothing to simplify."
+180. trace_length(3-(1+2-x*1))
+   => 1
+181. simplify(3*2-(0-2)-1)
+   => 3*2-(0-2)-1
+182. explain(y*(1*3))
+   => "y*(1*3) becomes y*3, because one times a number is the number."
+183. trace_length(0+(2-z)*(2+z))
+   => 1
+184. simplify((0-y-(1-1))*(3+2-(x+0)))
+   => (0-y-(1-1))*(3+2-x)
+185. explain(z)
+   => "Nothing to simplify."
+186. trace_length((3*z+(0-1))*(y-3-y))
+   => 0
+187. simplify(y*(z*0-3*y))
+   => y*(0-3*y)
+188. explain((0-0)*(y-1))
+   => "Nothing to simplify."
+189. trace_length(3-(3+(1-x)))
+   => 0
+190. simplify((0-1)*x-(0+0-1*z))
+   => (0-1)*x-(0-z)
+191. explain(3*3+0*x)
+   => "3*3+0*x becomes 3*3+0, because zero times anything is zero. 3*3+0 becomes 3*3, because adding zero changes nothing."
+192. trace_length(x-0+y-y)
+   => 0
+193. simplify(x*(0+0)+(2+1*1))
+   => 2+1
+194. explain(3)
+   => "Nothing to simplify."
+195. trace_length(0)
+   => 0
+196. simplify((3-z)*(3+z)+x)
+   => (3-z)*(3+z)+x
+197. explain(1-z*3)
+   => "Nothing to simplify."
+198. trace_length(1)
+   => 0
+199. simplify((3-3+x*y)*(z*0+(y-1)))
+   => (3-3+x*y)*(y-1)
+200. explain(x)
+   => "Nothing to simplify."
