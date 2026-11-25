@@ -3,6 +3,7 @@
 % explain/2 writes one sentence per step. Each rule is checked to keep the value.
 %?- simplify((x + 0) * 1, R, T).      % R = x, T = [step(times_one, ...), step(plus_zero, ...)]
 %?- simplify((x + 0) * 1, _, T), explain(T, Text).
+%?- simplify(x * (2 * 3) + (y - y), R, _).    % R = x * 6
 :- module(mnnexplain, [rule/4, simplify/3, explain/2, value/3, irreducible/1]).
 :- use_module(library(lists)).
 :- use_module(library(apply)).
@@ -18,17 +19,25 @@ rule(minus_self, X - Y, 0, "a number minus itself is zero") :- X == Y.
 rule(double, X + Y, 2 * X, "a number added to itself is twice it") :- X == Y, X \== 0.
 rule(fold, A + B, C, "the numbers are added now, once, instead of every time the code runs") :- number(A), number(B), C is A + B.
 rule(fold_times, A * B, C, "the numbers are multiplied now, once") :- number(A), number(B), C is A * B.
+rule(minus_zero, X - 0, X, "taking away zero changes nothing").
+rule(fold_minus, A - B, C, "the numbers are subtracted now, once") :- number(A), number(B), C is A - B.
 
 % simplify(+Expr, -Result, -Trace): rewrite the outermost-leftmost place a rule applies, until none does.
 simplify(E, R, T) :- ( rewrite_once(E, E1, S) -> T = [S|T1], simplify(E1, R, T1) ; R = E, T = [] ).
-rewrite_once(E, E1, step(Name, E, E1)) :- rule(Name, E0, E1, _), subsumes_term(E0, E), E0 = E, !.
+% the expression is offered to each rule (a copy, so it is never bound), so a rule's condition is
+% tested on the real parts; asking for the pattern first would test conditions on unknowns, and fail
+rewrite_once(E, E1, step(Name, E, E1)) :- copy_term(E, E0), rule(Name, E0, E1, _), E0 =@= E, !.
 rewrite_once(E, E1, Step) :- compound(E), E =.. [F|As], nth0(I, As, A), rewrite_once(A, A1, Step0), !,
     length(Pre, I), append(Pre, [_|Post], As), append(Pre, [A1|Post], As1), E1 =.. [F|As1], Step0 = step(N, _, _), Step = step(N, E, E1).
 
 irreducible(E) :- \+ rewrite_once(E, _, _).
 
-% explain(+Trace, -Text): one sentence per step.
-explain(T, Text) :- maplist([step(N, A, B), S]>>( rule(N, _, _, Why), format(string(S), "~w becomes ~w, because ~w.", [A, B, Why]) ), T, Ss),
+% explain(+Trace, -Text): one sentence per step. The reason is found by offering the rule the step's
+% expression (or the part of it the rule rewrote), so rules with a condition give theirs too.
+reason(N, A, Why) :- subexpr(A, P), copy_term(P, P0), rule(N, P0, _, Why), P0 =@= P, !.
+subexpr(E, E).
+subexpr(E, P) :- compound(E), E =.. [_|As], member(A, As), subexpr(A, P).
+explain(T, Text) :- maplist([step(N, A, B), S]>>( reason(N, A, Why), format(string(S), "~w becomes ~w, because ~w.", [A, B, Why]) ), T, Ss),
     ( Ss == [] -> Text = "Nothing to simplify." ; atomic_list_concat(Ss, ' ', A0), atom_string(A0, Text) ).
 
 % value(+Expr, +Env, -V): the number, with variables from Env (Name-Value pairs).

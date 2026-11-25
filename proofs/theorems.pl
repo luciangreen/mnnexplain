@@ -13,7 +13,7 @@ expr(D, E) :- D > 0, D1 is D - 1, ( expr(D1, E) ; member(Op, [+, *, -]), expr(D1
 env([x-X, y-Y]) :- between(-2, 2, X), between(-2, 2, Y).
 
 % 1. Every rule keeps the value, wherever it applies.
-theorem(rules_keep_value) :- forall(( expr(2, E), rule(_, F, T, _), subsumes_term(F, E), copy_term(F-T, E-T1), env(Env) ), ( value(E, Env, A), value(T1, Env, B), A =:= B )).
+theorem(rules_keep_value) :- forall(( expr(2, E), copy_term(E, E0), rule(_, E0, T1, _), E0 =@= E, env(Env) ), ( value(E, Env, A), value(T1, Env, B), A =:= B )).
 
 % 2. Simplifying keeps the value, and each step in the trace does too.
 theorem(simplify_keeps_value) :-
@@ -26,3 +26,8 @@ replays(E, [step(_, P, Q)|Ts], R) :- P == E, replays(Q, Ts, R).
 
 % 4. The result is fully simplified, and the explanation has one sentence per step.
 theorem(result_irreducible_and_explained) :- forall(( expr(2, E), simplify(E, R, T) ), ( irreducible(R), explain(T, S), ( T == [] -> true ; split_string(S, ".", " ", Parts), exclude(==(""), Parts, Ss), length(Ss, N), length(T, N) ) )).
+
+% 5. Every rule, conditions included, applies somewhere in the domain: no rule is dead.
+% (rule/4 is not asked for its rules with unknown parts: the rules with a condition would not be offered)
+names([plus_zero, zero_plus, times_one, one_times, times_zero, zero_times, minus_self, double, fold, fold_times, minus_zero, fold_minus]).
+theorem(every_rule_applies) :- names(Ns), forall(member(N, Ns), ( expr(2, E), simplify(E, _, T), memberchk(step(N, _, _), T) -> true )).
